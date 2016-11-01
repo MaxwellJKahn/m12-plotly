@@ -1,0 +1,22 @@
+---
+dtitle: "Exercise_2"
+output: html_document
+---
+
+```{r echo=FALSE, results='hide',message=FALSE}
+library(plotly)
+p <- plot_ly(
+  x = c("Math Score", "Science Score", "Reading Score"),
+  y = c(92, 88, 94),
+  name = "AVG High School Test Scores",
+  type = "bar"
+) %>%
+  add_trace(y = c(84, 90, 91), name = 'AVG College Test Scores') %>%
+  layout(yaxis = list(title = 'Count'), barmode = 'group')
+
+```
+`r p`
+
+# Here it is again!
+
+`r p`
