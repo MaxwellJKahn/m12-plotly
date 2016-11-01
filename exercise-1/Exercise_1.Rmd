@@ -1,0 +1,41 @@
+---
+title: "Exercise_1"
+output: html_document
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r echo=FALSE, results='hide',message=FALSE}
+library(plotly)
+```
+```{r echo=FALSE}
+df <- read.csv("data.csv")
+df$hover <- with(df, paste(State, '<br>', "Residents with Chlamydia:", Chlamydia_Count, '<br>', "Chlamydia Rate per 1,000 people", Chlamydia_Rate))
+# give state boundaries a white border
+
+l <- list(color = toRGB("white"), width = 2)
+
+# specify some map projection/options
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+plot_geo(df, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~Chlamydia_Rate, text = ~hover, locations = ~Code,
+    color = ~Chlamydia_Rate, colors = 'Reds'
+  ) %>%
+  colorbar(title = "Chlamydia Rate per 1,000") %>%
+  layout(
+    title = '2015 Chlamydia By State<br>(Hover for breakdown)',
+    geo = g
+  )
+```
+
+
